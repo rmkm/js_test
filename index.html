@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="demo.css">
+    <script type="text/javascript" src="jquery-3.4.1.min.js"></script>
+
+<script>
+    $(document).ready(function(){
+        $("#removeButton").click(function(){
+            $("#0005").fadeOut();
+            $("#123").fadeOut();
+        });
+        $("#addButton").click(function(){
+            var newId = "0013"
+            var container = document.getElementById("Salesfloor");
+            var blockList = container.children;
+            var newBlock = document.createElement("div");
+            newBlock.setAttribute("class", "block");
+            newBlock.setAttribute("id", newId);
+            newBlock.innerHTML = newId;
+            //for (var block in blockList) {
+            //    console.log(block.id);
+            //    if (newId > block.id) {
+            //        $(newBlock).insertAfter(block).hide().fadeIn();
+            //        break;
+            //    }
+            //}
+            // Insert block
+            for (var i = 0; i < blockList.length; i++) {
+                if (newId < blockList[i].id) {
+                    $(newBlock).insertBefore(blockList[i]).hide().fadeIn();
+                    break;
+                }
+            }
+            //$(newBlock).appendTo("#Salesfloor").hide().fadeIn();
+            //$(newBlock).insertAfter(prevBlock).hide().fadeIn();
+            
+        });
+    });
+
+    //var table = document.createElement("table");
+    //table.setAttribute("id", "tag");
+    //for (var i = 0; i < gridNum; i++) {
+    //    table.insertRow(0);
+    //    var cell1 = table.rows[0].insertCell(0);
+    //    var cell2 = table.rows[0].insertCell(1);
+    //    var cell3 = table.rows[0].insertCell(2);
+    //    var cell4 = table.rows[0].insertCell(3);
+    //    var cell5 = table.rows[0].insertCell(4);
+    //    cell1.innerHTML = "Hello1";
+    //    cell2.innerHTML = "Hello2";
+    //    cell3.innerHTML = "Hello3";
+    //    cell4.innerHTML = "Hello4";
+    //    cell5.innerHTML = "Hello5";
+    //    //table.rows[i].insertCell(1);
+    //    //table.rows[i].insertCell(2);
+    //    //table.rows[i].insertCell(3);
+    //    //table.rows[i].insertCell(4);
+    //}
+    //for (var i = 0; i < gridNum; i++) {
+    //    table.rows[i].insertCell(0);
+    //}
+    
+    //var cell1 = row.insertCell(0);
+    //var cell2 = row.insertCell(1);
+    //cell1.innerHTML = "NEW CELL1";
+    //cell2.innerHTML = "NEW CELL2";
+    //document.body.appendChild(table);
+
+    //var div = document.createElement("div");
+    //div.setAttribute("id", "tag");
+    //var div_child1 = document.createElement("div");
+    //div_child1.innerHTML = "Hello1"
+    //var div_child2 = document.createElement("div");
+    //div_child1.innerHTML = "Hello2"
+    //var div_child3 = document.createElement("div");
+    //div_child1.innerHTML = "Hello3"
+    //div.appendChild(div_child1);
+    //div.appendChild(div_child2);
+    //div.appendChild(div_child3);
+    //document.body.appendChild(div);
+    //var num = 10;
+    //var array_front = [];
+    //var array_back = [];
+    //for ( var i = 0; i < num; i++) {
+    //    var data = Math.round(Math.random() * 100);
+    //    var para = document.createElement("div");
+    //    para.setAttribute("id", "tag");
+    //    //para.innerHTML = data.toString();
+    //    document.body.appendChild(para);
+    //    array_para[i]=para;
+    //     
+    //}
+
+    //const interval = setInterval(function() {
+    //    for ( var i = 0; i < num; i++) {
+    //        var data = Math.round(Math.random() * 100);
+    //        if (data > 50) {
+    //            array_para[i].style.backgroundColor = "blue";
+    //        } else {
+    //            array_para[i].style.backgroundColor = "red";
+    //        }
+    //        array_para[i].innerHTML = data.toString();
+    //    }
+    //}, 5000);
+
+</script> 
+
+<body>
+    <div id = "background">
+        <div class="container" id = "Backstock">
+            <div class = "backgroundHeader">BackStock</div>
+            <!--
+            <div class = "block is-show" id = "111" >111</div>
+            <div class = "block is-show" id = "222" >222</div>
+            <div class = "block is-show" id = "333" >333</div>
+            <div class = "block is-show" id = "444" >444</div>
+            <div class = "block is-show" id = "555" >555</div>
+            <div class = "block is-show" id = "666" >666</div>
+            <div class = "block is-show" id = "777" >777</div>
+            <div class = "block is-show" id = "888" >888</div>
+            <div class = "block is-show" id = "999" >999</div>
+            <div class = "block is-show" id = "000" >000</div>
+            -->
+            <div class = "block" id = "0001" >0001</div>
+            <div class = "block" id = "0002" >0002</div>
+            <div class = "block" id = "0003" >0003</div>
+            <div class = "block" id = "0004" >0004</div>
+            <div class = "block" id = "0005" >0005</div>
+            <div class = "block" id = "0006" >0006</div>
+            <div class = "block" id = "0007" >0007</div>
+            <div class = "block" id = "0008" >0008</div>
+            <div class = "block" id = "0009" >0009</div>
+            <div class = "block" id = "0010" >0010</div>
+        </div>
+        <div class="container" id = "Salesfloor">
+            <div class = "backgroundHeader">Salesfloor</div>
+            <div class = "block" id = "0011" >0011</div>
+            <div class = "block" id = "0012" >0012</div>
+            <!--<div class = "block" id = "0013" >0013</div>-->
+            <div class = "block" id = "0014" >0014</div>
+            <div class = "block" id = "0015" >0015</div>
+            <div class = "block" id = "0016" >0016</div>
+            <div class = "block" id = "0017" >0017</div>
+            <div class = "block" id = "0018" >0018</div>
+            <div class = "block" id = "0019" >0019</div>
+            <div class = "block" id = "0020" >0020</div>
+        </div>
+    </div>
+        <div class = "block" id = "123" >123</div>
+
+        <button id="removeButton">Remove</button>
+        <button id="addButton">Add</button>
+</body>
+
+</head>
+
+</html>
