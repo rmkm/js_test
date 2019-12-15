@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="demo.css">
+    <script type="text/javascript" src="jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="demo.js"></script>
+<!--
+<script>
+
+    function getRandomInt(min, max) {
+        return Math.round(Math.random() * (max - min) + min);
+    }
+
+    function createBackground() {
+        var background = document.createElement("div");
+        background.setAttribute("id", background);
+        document.body.appendChild(background);
+        return;
+    }
+
+    function createBlock(id, location) {
+            var container = document.getElementById(location);
+            var newBlock = document.createElement("div");
+            newBlock.setAttribute("class", "block");
+            newBlock.setAttribute("id", id);
+            newBlock.innerHTML = id;
+            return newBlock;
+    }
+
+    function insertBlock(block, location) {
+        var container = document.getElementById(location);
+        var blockList = container.children;
+        for (var i = 0; i < blockList.length; i++) {
+            if (Number(block.id) < Number(blockList[i].id)) {
+                $(block).insertBefore(blockList[i]).hide().show(300);
+                return;
+            }
+        }
+        $(block).appendTo(container).hide().show(300);
+    }
+
+    function hideBlock(block) {
+        $(block).hide(300);
+    }
+
+    $(document).ready(function(){
+        $("#removeButton").click(function(){
+            //$("#0005").hide('slow');
+            var block = document.getElementById("4");
+            hideBlock(block);
+        });
+        $("#addButton").click(function(){
+            var id = getRandomInt(0, 100);
+            console.log(id);
+            var location;
+            var i = getRandomInt(0, 100);
+            if (i < 50) {
+                location = "Backstock";
+            } else {
+                location = "Salesfloor";
+            }
+            console.log(location);
+            var newBlock = createBlock(id, location);
+            console.log(newBlock);
+            insertBlock(newBlock, location);
+        });
+    });
+
+    var x = document.createElement("P");                        // Create a <p> node
+var t = document.createTextNode("This is a paragraph.");    // Create a text node
+x.appendChild(t);                                           // Append the text to <p>
+document.body.appendChild(x);   
+    createBackground();
+
+</script> 
+-->
+
+<body>
+    <!--
+    <div id = "background">
+        <div class="container" id = "Backstock">
+            <div class = "backgroundHeader">BackStock</div>
+            <div class = "block" id = "1" >1</div>
+            <div class = "block" id = "2" >2</div>
+            <div class = "block" id = "3" >3</div>
+            <div class = "block" id = "4" >4</div>
+            <div class = "block" id = "5" >5</div>
+            <div class = "block" id = "6" >6</div>
+            <div class = "block" id = "7" >7</div>
+            <div class = "block" id = "8" >8</div>
+            <div class = "block" id = "9" >9</div>
+            <div class = "block" id = "10" >10</div>
+        </div>
+        <div class="container" id = "Salesfloor">
+            <div class = "backgroundHeader">Salesfloor</div>
+            <div class = "block" id = "11" >11</div>
+            <div class = "block" id = "12" >12</div>
+            <div class = "block" id = "13" >13</div>
+            <div class = "block" id = "14" >14</div>
+            <div class = "block" id = "15" >15</div>
+            <div class = "block" id = "16" >16</div>
+            <div class = "block" id = "17" >17</div>
+            <div class = "block" id = "18" >18</div>
+            <div class = "block" id = "19" >19</div>
+            <div class = "block" id = "20" >20</div>
+        </div>
+    </div>
+-->
+        <button id="startButton">Start</button>
+        <button id="removeButton">Remove</button>
+        <button id="addButton">Add</button>
+        <button id="autoButton">Auto</button>
+</body>
+
+</head>
+
+</html>
