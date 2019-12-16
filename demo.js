@@ -133,4 +133,30 @@ $(document).ready(function(){
 
         }
     });
+
+    var $grid = $('.grid').isotope({
+        // options
+        itemSelector: '.grid-item',
+        layoutMode: 'fitRows',
+        sortBy: 'eid',
+        getSortData: {
+            'eid': '.eid parseInt'
+        }
+    });
+
+    $('#testButton').on( 'click', function() {
+        console.log("testButton");
+      // create new item elements
+      var elems = [];
+      for ( var i = 0; i < 3; i++ ) {
+        var $elem = $('<div class="grid-item" />');
+        // set number
+        var num = Math.floor( Math.random() * 100 );
+        $elem.append( '<p class="eid" >' + num + '</p>' );
+        elems.push( $elem[0] );
+      }
+      // insert new elements
+      $grid.isotope( 'insert', elems );
+    });
 });
+
