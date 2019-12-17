@@ -1,5 +1,6 @@
+// min ... max - 1
 function getRandomInt(min, max) {
-    return Math.round(Math.random() * (max - min) + min);
+    return Math.floor(Math.random() * (max - min) + min);
 }
 
 function createBackground() {
@@ -8,43 +9,34 @@ function createBackground() {
     return background;
 }
 
-function createContainer(name, id) {
-    var container = document.createElement("div");
-    var bar = document.createElement("div");
-    container.setAttribute("class", "container");
-    container.setAttribute("id", id);
-    bar.setAttribute("class", "containerHeader");
-    bar.innerHTML = name;
-    container.appendChild(bar);
-    return container;
-}
-
 function createGrid(name, id) {
     var grid = document.createElement("div");
     var header = createGridHeader(name);
     grid.setAttribute("class", "grid");
     grid.setAttribute("id", id);
     // Initialize
-    var iso = new Isotope(grid, {
-        // options
+    var $grid = $('#'+id).isotope({
         itemSelector: '.grid-item',
         layoutMode: 'fitRows',
         sortBy: 'eid',
         getSortData: {
-            'eid': '.eid parseInt'
+            'eid': '.eid parseInt',
+            'category': '[category]' 
         }
     });
-    iso.insert(header);
+    $grid.isotope('insert', header);
+    //var iso = new Isotope(grid, {
+    //    // options
+    //    itemSelector: '.grid-item',
+    //    layoutMode: 'fitRows',
+    //    //sortBy: 'eid',
+    //    getSortData: {
+    //        'eid': '.eid parseInt',
+    //        'category': '[category]' 
+    //    }
+    //});
+    //iso.insert(header);
     return grid;
-}
-
-function createBlock(id) {
-        //var container = document.getElementById(location);
-        var newBlock = document.createElement("div");
-        newBlock.setAttribute("class", "block");
-        newBlock.setAttribute("id", id);
-        newBlock.innerHTML = id;
-        return newBlock;
 }
 
 function createGridHeader(name) {
@@ -59,137 +51,53 @@ function createItem(id) {
         var newItem= document.createElement("div");
         newItem.setAttribute("class", "grid-item");
         newItem.setAttribute("id", id);
+
         var eid= document.createElement("p");
         eid.setAttribute("class", "eid");
         eid.innerHTML = id;
         newItem.appendChild(eid);
+
+        var i = getRandomInt(0, iconList.length);
+        var img= document.createElement("img");
+        img.setAttribute("src", iconList[i]);
+        img.setAttribute("class", "item-icon");
+        newItem.setAttribute("category", categoryList[i]);
+        //img.setAttribute("id", iconList[i]);
+        newItem.appendChild(img);
+
         return newItem;
 }
 
-function insertBlock(block, location) {
-    var container = document.getElementById(location);
-    var blockList = container.children;
-    for (var i = 0; i < blockList.length; i++) {
-        if (Number(block.id) < Number(blockList[i].id)) {
-            $(block).insertBefore(blockList[i]).hide().show(speed);
-            return;
-        }
-    }
-    $(block).appendTo(container).hide().show(500);
-}
-
-function insertItem(item, location) {
-    var grid = document.getElementById(location);
-    //var itemList = grid.children;
-    //for (var i = 0; i < itemList.length; i++) {
-    //    if (Number(item.id) < Number(itemList[i].id)) {
-    //        $(item).insertBefore(itemList[i]).hide().show(speed);
-    //        return;
-    //    }
-    //}
-    $(grid).isotope('insert', item);
-}
-
-function setBlock(block, location) {
-    var parentContainer = block.parentElement;
-    if (parentContainer != null) {
-        $(block).fadeOut(speed, function() {
-            insertBlock(block, location);
-        });
-        //hideBlock(block);
-    } else {
-        insertBlock(block, location);
-    }
-}
-
-function showBlock(block) {
-    $(block).show(300);
-}
-
-function hideBlock(block) {
-    $(block).hide(300);
-}
-
-//var $grid = $('.grid').isotope({
-//    // options
-//    itemSelector: '.grid-item',
-//    layoutMode: 'fitRows',
-//    sortBy: 'eid',
-//    getSortData: {
-//        'eid': '.eid parseInt'
-//    }
-//});
-
-var speed = 400;
-var locationList = [];
 var colorList = [];
+
+var locationList = [];
 locationList.push("Backstock");
 locationList.push("Salesfloor");
 
+var iconList = [];
+iconList.push("images/glasses.svg");
+iconList.push("images/heels.svg");
+iconList.push("images/outercoats.svg");
+iconList.push("images/shirts.svg");
+iconList.push("images/skirts.svg");
+iconList.push("images/sneakers.svg");
+iconList.push("images/trousers.svg");
+iconList.push("images/watches.svg");
+
+var categoryList = [];
+categoryList.push("glasses");
+categoryList.push("heels");
+categoryList.push("outercoats");
+categoryList.push("shirts");
+categoryList.push("skirts");
+categoryList.push("sneakers");
+categoryList.push("trousers");
+categoryList.push("watches");
+
+var gridList = [];
+
 $(document).ready(function(){
-    //$("#startButton").click(function(){
-    //    var background = createBackground();
-    //    console.log(background);
-    //    var container = createContainer("BACK STOCK", "Backstock");
-    //    background.appendChild(container);
-    //    container = createContainer("SALES FLOOR", "Salesfloor");
-    //    background.appendChild(container);
-    //    document.body.appendChild(background);
-    //});
-    //$("#removeButton").click(function(){
-    //    //$("#0005").hide('slow');
-    //    var block = document.getElementById("4");
-    //    hideBlock(block);
-    //});
-    //$("#addButton").click(function(){
-    //    var id = getRandomInt(0, 100);
-    //    var block = document.getElementById(id);
-    //    if (block === null) {
-    //        // New block
-    //        var location;
-    //        var i = getRandomInt(0, locationList.length-1);
-    //        location = locationList[i];
-    //        var newBlock = createBlock(id);
-    //        setBlock(newBlock, location);
-    //    } else {
-    //        var parentContainer = block.parentElement;
-    //        var location;
-    //        if (parentContainer.id == "Backstock") {
-    //            location = "Salesfloor";
-    //        } else {
-    //            location = "Backstock";
-    //        }
-    //        setBlock(block, location);
-    //        // Found block
-    //        // Switch
-    //    }
-    //});
-    //$("#autoButton").click(function(){
-    //    for (var num = 0; num < 20; num++) {
 
-    //        var id = getRandomInt(0, 100);
-    //        var block = document.getElementById(id);
-    //        if (block === null) {
-    //            // New block
-    //            var location;
-    //            var i = getRandomInt(0, locationList.length-1);
-    //            location = locationList[i];
-    //            var newBlock = createBlock(id);
-    //            setBlock(newBlock, location);
-    //        } else {
-    //            var parentContainer = block.parentElement;
-    //            var location;
-    //            if (parentContainer.id == "Backstock") {
-    //                location = "Salesfloor";
-    //            } else {
-    //                location = "Backstock";
-    //            }
-    //            setBlock(block, location);
-    //            // Found block
-    //            // Switch
-    //        }
-
-    //    }
     $("#startButton").click(function(){
         var background = createBackground();
         var grid = createGrid("BACK STOCK", "Backstock");
@@ -209,16 +117,18 @@ $(document).ready(function(){
         if (item === null) {
             // New block
             var location;
-            var i = getRandomInt(0, locationList.length-1);
+            var i = getRandomInt(0, locationList.length);
             location = locationList[i];
             var newItem = createItem(id);
+
+            //var $grid = $('#'+location).isotope();
+            //$grid.isotope( 'insert', newItem );
+
             var grid = document.querySelector('#'+location)
-            console.log(grid);
             var iso = Isotope.data(grid);
             iso.insert(newItem);
         } else { // item found
             var parentGrid = item.parentElement;
-            console.log(parentGrid);
             var location;
             if (parentGrid.id == "Backstock") {
                 location = "Salesfloor";
@@ -228,77 +138,80 @@ $(document).ready(function(){
             var grid = document.querySelector('#'+location)
             var curIso = Isotope.data(parentGrid);
             var anotherIso = Isotope.data(grid);
-            //item.hide();
-            curIso.on( 'removeComplete', function(item) {
-                anotherIso.insert(item);
-            });
+            var cloneItem = item.cloneNode(true);
             curIso.remove(item);
             curIso.layout();
-            //anotherIso.insert(item);
-            //parentGrid.isotope('insert', item);
-            // Found block
-            // Switch
+            anotherIso.insert(cloneItem);
         }
     });
     $("#autoButton").click(function(){
         for (var num = 0; num < 50; num++) {
-
             var id = getRandomInt(0, 100);
             var item = document.getElementById(id);
-            if (item === null) {
-                // New item 
+            if (item !== null) { // item found
+                var parentGrid = item.parentElement;
                 var location;
-                var i = getRandomInt(0, locationList.length-1);
-                location = locationList[i];
-                var newItem = createItem(id);
-                setBlock(newBlock, location);
-            } else {
-                var parentContainer = block.parentElement;
-                var location;
-                if (parentContainer.id == "Backstock") {
+                if (parentGrid.id == "Backstock") {
                     location = "Salesfloor";
                 } else {
                     location = "Backstock";
                 }
-                setBlock(block, location);
-                // Found block
-                // Switch
+                //var grid = document.querySelector('#'+location)
+                var grid = document.getElementById('#'+location);
+                var curIso = Isotope.data(parentGrid);
+                var anotherIso = Isotope.data(grid);
+                var cloneItem = item.cloneNode(true);
+                curIso.remove(item);
+                curIso.layout();
+                anotherIso.insert(cloneItem);
+                item.parentNode.removeChild(item);
+            } else { // New item
+                var location;
+                var i = getRandomInt(0, locationList.length);
+                location = locationList[i];
+                var newItem = createItem(id);
+                //var grid = document.querySelector('#'+location)
+                var grid = document.getElementById('#'+location);
+                var iso = Isotope.data(grid);
+                iso.insert(newItem);
             }
-
         }
     });
 
-        //masonry: {
-        //    columnWidth: '.grid-sizer'
-        //    //columnWidth: '.grid-sizer'
-        //}
+    $('#sorts').on( 'click', 'button', function() {
+        var sortByValue = $(this).attr('data-sort-by');
+        console.log(sortByValue);
+            var grid = document.getElementById('#Backstock');
+            var iso = Isotope.data(grid);
+            iso.sortBy('eid');
+            //iso.sortBy(sortByValue);
+        for (var i = 0; i < locationList.lengh; i++) {
+            console.log(locationList[i]);
+            var grid = document.getElementById('#'+locationList[i]);
+            console.log(grid);
+            var iso = Isotope.data(grid);
+            iso.sortBy(sortByValue);
+        }
+        //$grid.isotope({ sortBy: sortByValue });
+    });
 
-    //var $gridContainer = $('.grid-container').isotope({
-    //    // options
-    //    itemSelector: '.grid-item',
-    //    layoutMode: 'fitRows',
-    //    sortBy: 'eid',
-    //    getSortData: {
-    //        'eid': '.eid parseInt'
-    //    }
+    //$('#testButton').on( 'click', function() {
+    //  // create new item elements
+    //  var elems = [];
+    //  for ( var i = 0; i < 3; i++ ) {
+    //    var $elem = $('<div class="grid-item" />');
+    //    // set number
+    //    var num = Math.floor( Math.random() * 100 );
+    //    $elem.append( '<p class="eid" >' + num + '</p>' );
+    //    elems.push( $elem[0] );
+    //  }
+    //  // insert new elements
+    //  //var newItem = createItem(id);
+    //  var $grid = $('#Backstock');
+    //  console.log($grid);
+    //  $grid.isotope( 'insert', elems );
+    //  //$grid.isotope( 'insert', newItem);
     //});
 
-    $('#testButton').on( 'click', function() {
-      // create new item elements
-      var elems = [];
-      for ( var i = 0; i < 3; i++ ) {
-        var $elem = $('<div class="grid-item" />');
-        // set number
-        var num = Math.floor( Math.random() * 100 );
-        $elem.append( '<p class="eid" >' + num + '</p>' );
-        elems.push( $elem[0] );
-      }
-      // insert new elements
-      //var newItem = createItem(id);
-      var $grid = $('#Backstock');
-      console.log($grid);
-      $grid.isotope( 'insert', elems );
-      //$grid.isotope( 'insert', newItem);
-    });
 });
 
