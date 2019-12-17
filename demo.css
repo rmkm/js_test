@@ -9,6 +9,11 @@
     --Marble: #f3ebdd;
     --Brownstone: #7d5642;
 }
+
+* {
+    font-family: arial;
+}
+
 #background {
     /*background: rgb(0,0,77);
     background: linear-gradient(90deg, rgba(0,0,77,1) 10%, rgba(12,30,150,1) 43%, rgba(20,81,169,1) 75%);*/
@@ -42,7 +47,6 @@
     width: 136px;
     height: 78px;
     border-radius: 2px;
-    font-family: arial;
     color: var(--niceBlack);
     /*border: solid 1px var(--niceBlack);*/
     display: flex;
@@ -70,18 +74,23 @@
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    font-family: arial;
 }
 
 .grid {
-    background-color: var(--niceNeutral);
+    width: 560px;
+    min-height: 480px;
+    background-color: var(--niceLightBlue);
+    border-radius: 2px;
+    color: black;
 }
+
 .grid-item {
     background-color: var(--niceAlmond);
-    width: 136px;
-    height: 78px;
+    /*width: 136px;*/
+    margin: 6px;
+    width: 100px;
+    height: 100px;
     border-radius: 2px;
-    font-family: arial;
     color: var(--niceBlack);
     float: left;
     /*border: solid 1px var(--niceBlack);*/
@@ -95,6 +104,24 @@
     opacity: 0;
     visibility: hidden;*/
 }
+
+.grid-header{
+    margin: 0%;
+    width: 100%;
+    height: 60px;
+    background-color: var(--niceBlue);
+    color: white;
+    font-size: 24px;
+    border-radius: 2px 2px 0 0;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    /*border: solid 1px var(--niceBlack);*/
+}
+
+.grid-sizer{
+    width: 20%;
+}
 .eid {
-    color: var(--niceBlue);
+    color: var(--niceBlack);
 }

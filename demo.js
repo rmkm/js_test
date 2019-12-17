@@ -5,7 +5,6 @@ function getRandomInt(min, max) {
 function createBackground() {
     var background = document.createElement("div");
     background.setAttribute("id", "background");
-    document.body.appendChild(background);
     return background;
 }
 
@@ -20,6 +19,25 @@ function createContainer(name, id) {
     return container;
 }
 
+function createGrid(name, id) {
+    var grid = document.createElement("div");
+    var header = createGridHeader(name);
+    grid.setAttribute("class", "grid");
+    grid.setAttribute("id", id);
+    // Initialize
+    var iso = new Isotope(grid, {
+        // options
+        itemSelector: '.grid-item',
+        layoutMode: 'fitRows',
+        sortBy: 'eid',
+        getSortData: {
+            'eid': '.eid parseInt'
+        }
+    });
+    iso.insert(header);
+    return grid;
+}
+
 function createBlock(id) {
         //var container = document.getElementById(location);
         var newBlock = document.createElement("div");
@@ -27,6 +45,25 @@ function createBlock(id) {
         newBlock.setAttribute("id", id);
         newBlock.innerHTML = id;
         return newBlock;
+}
+
+function createGridHeader(name) {
+        var header = document.createElement("div");
+        header.setAttribute("class", "grid-item grid-header");
+        header.innerHTML = name;
+        return header;
+}
+
+function createItem(id) {
+        //var container = document.getElementById(location);
+        var newItem= document.createElement("div");
+        newItem.setAttribute("class", "grid-item");
+        newItem.setAttribute("id", id);
+        var eid= document.createElement("p");
+        eid.setAttribute("class", "eid");
+        eid.innerHTML = id;
+        newItem.appendChild(eid);
+        return newItem;
 }
 
 function insertBlock(block, location) {
@@ -39,6 +76,18 @@ function insertBlock(block, location) {
         }
     }
     $(block).appendTo(container).hide().show(500);
+}
+
+function insertItem(item, location) {
+    var grid = document.getElementById(location);
+    //var itemList = grid.children;
+    //for (var i = 0; i < itemList.length; i++) {
+    //    if (Number(item.id) < Number(itemList[i].id)) {
+    //        $(item).insertBefore(itemList[i]).hide().show(speed);
+    //        return;
+    //    }
+    //}
+    $(grid).isotope('insert', item);
 }
 
 function setBlock(block, location) {
@@ -61,6 +110,16 @@ function hideBlock(block) {
     $(block).hide(300);
 }
 
+//var $grid = $('.grid').isotope({
+//    // options
+//    itemSelector: '.grid-item',
+//    layoutMode: 'fitRows',
+//    sortBy: 'eid',
+//    getSortData: {
+//        'eid': '.eid parseInt'
+//    }
+//});
+
 var speed = 400;
 var locationList = [];
 var colorList = [];
@@ -68,55 +127,130 @@ locationList.push("Backstock");
 locationList.push("Salesfloor");
 
 $(document).ready(function(){
+    //$("#startButton").click(function(){
+    //    var background = createBackground();
+    //    console.log(background);
+    //    var container = createContainer("BACK STOCK", "Backstock");
+    //    background.appendChild(container);
+    //    container = createContainer("SALES FLOOR", "Salesfloor");
+    //    background.appendChild(container);
+    //    document.body.appendChild(background);
+    //});
+    //$("#removeButton").click(function(){
+    //    //$("#0005").hide('slow');
+    //    var block = document.getElementById("4");
+    //    hideBlock(block);
+    //});
+    //$("#addButton").click(function(){
+    //    var id = getRandomInt(0, 100);
+    //    var block = document.getElementById(id);
+    //    if (block === null) {
+    //        // New block
+    //        var location;
+    //        var i = getRandomInt(0, locationList.length-1);
+    //        location = locationList[i];
+    //        var newBlock = createBlock(id);
+    //        setBlock(newBlock, location);
+    //    } else {
+    //        var parentContainer = block.parentElement;
+    //        var location;
+    //        if (parentContainer.id == "Backstock") {
+    //            location = "Salesfloor";
+    //        } else {
+    //            location = "Backstock";
+    //        }
+    //        setBlock(block, location);
+    //        // Found block
+    //        // Switch
+    //    }
+    //});
+    //$("#autoButton").click(function(){
+    //    for (var num = 0; num < 20; num++) {
+
+    //        var id = getRandomInt(0, 100);
+    //        var block = document.getElementById(id);
+    //        if (block === null) {
+    //            // New block
+    //            var location;
+    //            var i = getRandomInt(0, locationList.length-1);
+    //            location = locationList[i];
+    //            var newBlock = createBlock(id);
+    //            setBlock(newBlock, location);
+    //        } else {
+    //            var parentContainer = block.parentElement;
+    //            var location;
+    //            if (parentContainer.id == "Backstock") {
+    //                location = "Salesfloor";
+    //            } else {
+    //                location = "Backstock";
+    //            }
+    //            setBlock(block, location);
+    //            // Found block
+    //            // Switch
+    //        }
+
+    //    }
     $("#startButton").click(function(){
-        console.log("Hello");
         var background = createBackground();
-        console.log(background);
-        var container = createContainer("BACK STOCK", "Backstock");
-        background.appendChild(container);
-        container = createContainer("SALES FLOOR", "Salesfloor");
-        background.appendChild(container);
+        var grid = createGrid("BACK STOCK", "Backstock");
+        background.appendChild(grid);
+        grid = createGrid("SALES FLOOR", "Salesfloor");
+        background.appendChild(grid);
         document.body.appendChild(background);
     });
     $("#removeButton").click(function(){
         //$("#0005").hide('slow');
-        var block = document.getElementById("4");
-        hideBlock(block);
+        //var block = document.getElementById("4");
+        //hideBlock(block);
     });
     $("#addButton").click(function(){
-        var id = getRandomInt(0, 100);
-        var block = document.getElementById(id);
-        if (block === null) {
+        var id = getRandomInt(0, 99);
+        var item = document.getElementById(id);
+        if (item === null) {
             // New block
             var location;
             var i = getRandomInt(0, locationList.length-1);
             location = locationList[i];
-            var newBlock = createBlock(id);
-            setBlock(newBlock, location);
-        } else {
-            var parentContainer = block.parentElement;
+            var newItem = createItem(id);
+            var grid = document.querySelector('#'+location)
+            console.log(grid);
+            var iso = Isotope.data(grid);
+            iso.insert(newItem);
+        } else { // item found
+            var parentGrid = item.parentElement;
+            console.log(parentGrid);
             var location;
-            if (parentContainer.id == "Backstock") {
+            if (parentGrid.id == "Backstock") {
                 location = "Salesfloor";
             } else {
                 location = "Backstock";
             }
-            setBlock(block, location);
+            var grid = document.querySelector('#'+location)
+            var curIso = Isotope.data(parentGrid);
+            var anotherIso = Isotope.data(grid);
+            //item.hide();
+            curIso.on( 'removeComplete', function(item) {
+                anotherIso.insert(item);
+            });
+            curIso.remove(item);
+            curIso.layout();
+            //anotherIso.insert(item);
+            //parentGrid.isotope('insert', item);
             // Found block
             // Switch
         }
     });
     $("#autoButton").click(function(){
-        for (var num = 0; num < 20; num++) {
+        for (var num = 0; num < 50; num++) {
 
             var id = getRandomInt(0, 100);
-            var block = document.getElementById(id);
-            if (block === null) {
-                // New block
+            var item = document.getElementById(id);
+            if (item === null) {
+                // New item 
                 var location;
                 var i = getRandomInt(0, locationList.length-1);
                 location = locationList[i];
-                var newBlock = createBlock(id);
+                var newItem = createItem(id);
                 setBlock(newBlock, location);
             } else {
                 var parentContainer = block.parentElement;
@@ -134,18 +268,22 @@ $(document).ready(function(){
         }
     });
 
-    var $grid = $('.grid').isotope({
-        // options
-        itemSelector: '.grid-item',
-        layoutMode: 'fitRows',
-        sortBy: 'eid',
-        getSortData: {
-            'eid': '.eid parseInt'
-        }
-    });
+        //masonry: {
+        //    columnWidth: '.grid-sizer'
+        //    //columnWidth: '.grid-sizer'
+        //}
+
+    //var $gridContainer = $('.grid-container').isotope({
+    //    // options
+    //    itemSelector: '.grid-item',
+    //    layoutMode: 'fitRows',
+    //    sortBy: 'eid',
+    //    getSortData: {
+    //        'eid': '.eid parseInt'
+    //    }
+    //});
 
     $('#testButton').on( 'click', function() {
-        console.log("testButton");
       // create new item elements
       var elems = [];
       for ( var i = 0; i < 3; i++ ) {
@@ -156,7 +294,11 @@ $(document).ready(function(){
         elems.push( $elem[0] );
       }
       // insert new elements
+      //var newItem = createItem(id);
+      var $grid = $('#Backstock');
+      console.log($grid);
       $grid.isotope( 'insert', elems );
+      //$grid.isotope( 'insert', newItem);
     });
 });
 
