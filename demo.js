@@ -14,28 +14,17 @@ function createGrid(name, id) {
     var header = createGridHeader(name);
     grid.setAttribute("class", "grid");
     grid.setAttribute("id", id);
-    // Initialize
-    var $grid = $('#'+id).isotope({
+    var iso = new Isotope(grid, {
+        // options
         itemSelector: '.grid-item',
         layoutMode: 'fitRows',
-        sortBy: 'eid',
+        //sortBy: 'eid',
         getSortData: {
             'eid': '.eid parseInt',
             'category': '[category]' 
         }
     });
-    $grid.isotope('insert', header);
-    //var iso = new Isotope(grid, {
-    //    // options
-    //    itemSelector: '.grid-item',
-    //    layoutMode: 'fitRows',
-    //    //sortBy: 'eid',
-    //    getSortData: {
-    //        'eid': '.eid parseInt',
-    //        'category': '[category]' 
-    //    }
-    //});
-    //iso.insert(header);
+    iso.insert(header);
     return grid;
 }
 
@@ -106,11 +95,7 @@ $(document).ready(function(){
         background.appendChild(grid);
         document.body.appendChild(background);
     });
-    $("#removeButton").click(function(){
-        //$("#0005").hide('slow');
-        //var block = document.getElementById("4");
-        //hideBlock(block);
-    });
+
     $("#addButton").click(function(){
         var id = getRandomInt(0, 99);
         var item = document.getElementById(id);
@@ -120,11 +105,7 @@ $(document).ready(function(){
             var i = getRandomInt(0, locationList.length);
             location = locationList[i];
             var newItem = createItem(id);
-
-            //var $grid = $('#'+location).isotope();
-            //$grid.isotope( 'insert', newItem );
-
-            var grid = document.querySelector('#'+location)
+            var grid = document.getElementById(location);
             var iso = Isotope.data(grid);
             iso.insert(newItem);
         } else { // item found
@@ -135,7 +116,7 @@ $(document).ready(function(){
             } else {
                 location = "Backstock";
             }
-            var grid = document.querySelector('#'+location)
+            var grid = document.getElementById(location);
             var curIso = Isotope.data(parentGrid);
             var anotherIso = Isotope.data(grid);
             var cloneItem = item.cloneNode(true);
@@ -144,7 +125,8 @@ $(document).ready(function(){
             anotherIso.insert(cloneItem);
         }
     });
-    $("#autoButton").click(function(){
+
+    $("#bulkButton").click(function(){
         for (var num = 0; num < 50; num++) {
             var id = getRandomInt(0, 100);
             var item = document.getElementById(id);
@@ -157,7 +139,7 @@ $(document).ready(function(){
                     location = "Backstock";
                 }
                 //var grid = document.querySelector('#'+location)
-                var grid = document.getElementById('#'+location);
+                var grid = document.getElementById(location);
                 var curIso = Isotope.data(parentGrid);
                 var anotherIso = Isotope.data(grid);
                 var cloneItem = item.cloneNode(true);
@@ -171,7 +153,7 @@ $(document).ready(function(){
                 location = locationList[i];
                 var newItem = createItem(id);
                 //var grid = document.querySelector('#'+location)
-                var grid = document.getElementById('#'+location);
+                var grid = document.getElementById(location);
                 var iso = Isotope.data(grid);
                 iso.insert(newItem);
             }
@@ -180,38 +162,12 @@ $(document).ready(function(){
 
     $('#sorts').on( 'click', 'button', function() {
         var sortByValue = $(this).attr('data-sort-by');
-        console.log(sortByValue);
-            var grid = document.getElementById('#Backstock');
+        for (var i = 0; i < locationList.length; i++) {
+            var grid = document.getElementById(locationList[i]);
             var iso = Isotope.data(grid);
-            iso.sortBy('eid');
-            //iso.sortBy(sortByValue);
-        for (var i = 0; i < locationList.lengh; i++) {
-            console.log(locationList[i]);
-            var grid = document.getElementById('#'+locationList[i]);
-            console.log(grid);
-            var iso = Isotope.data(grid);
-            iso.sortBy(sortByValue);
+            iso.arrange({sortBy: sortByValue});
         }
-        //$grid.isotope({ sortBy: sortByValue });
     });
-
-    //$('#testButton').on( 'click', function() {
-    //  // create new item elements
-    //  var elems = [];
-    //  for ( var i = 0; i < 3; i++ ) {
-    //    var $elem = $('<div class="grid-item" />');
-    //    // set number
-    //    var num = Math.floor( Math.random() * 100 );
-    //    $elem.append( '<p class="eid" >' + num + '</p>' );
-    //    elems.push( $elem[0] );
-    //  }
-    //  // insert new elements
-    //  //var newItem = createItem(id);
-    //  var $grid = $('#Backstock');
-    //  console.log($grid);
-    //  $grid.isotope( 'insert', elems );
-    //  //$grid.isotope( 'insert', newItem);
-    //});
 
 });
 
